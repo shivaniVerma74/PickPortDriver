@@ -235,7 +235,7 @@ class _ReferAndEranScreenState extends State<ReferAndEranScreen> {
         title: 'Refer and Eran',
         text: '$referCode',
         linkUrl: 'Refer and Eran',
-        chooserTitle: 'Example Chooser Title'
+        chooserTitle: 'PickPort Driver'
     );
   }
 }

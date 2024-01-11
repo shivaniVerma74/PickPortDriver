@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jdx/Views/SupportNewScreen.dart';
 import 'CustomColor.dart';
-
 
 class getAppbar extends StatelessWidget {
   final VoidCallback? onTaped;
@@ -23,8 +23,8 @@ class getAppbar extends StatelessWidget {
                 begin: Alignment.bottomLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                Color(0xFF0F368C),
-                Color(0xFF0F368C),
+                  Color(0xFF0F368C),
+                  Color(0xFF0F368C),
                 ],
                 stops: [
                   0,
@@ -40,19 +40,20 @@ class getAppbar extends StatelessWidget {
                   },
                   child: istrue ?? false
                       ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 45,
-                      width: 45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color(0xFF0F368C).withOpacity(0.4)),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color:Color(0xFF0F368C),
-                      ),
-                    ),
-                  )
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color:
+                                    const Color(0xFF0F368C).withOpacity(0.4)),
+                            child: const Icon(
+                              Icons.arrow_back,
+                              color: Color(0xFF0F368C),
+                            ),
+                          ),
+                        )
                       : const SizedBox()),
 
               Text(
@@ -76,7 +77,7 @@ class getAppbar extends StatelessWidget {
                         color: const Color(0xFF0F368C).withOpacity(0.4)),
                     child: const Icon(
                       Icons.notifications_none,
-                      color:Color(0xFF0F368C),
+                      color: Color(0xFF0F368C),
                     ),
                   ),
                 ),
@@ -141,10 +142,10 @@ class getAppbar extends StatelessWidget {
 
 Widget customAppBar(
     {required BuildContext context,
-      VoidCallback? onTaped,
-      required String text,
-      required bool isTrue,
-      bool? isActionIcon}) {
+    VoidCallback? onTaped,
+    required String text,
+    required bool isTrue,
+    bool? isActionIcon}) {
   return Container(
     padding: const EdgeInsets.only(top: 10),
     color: const Color(0xFF0F368C),
@@ -173,12 +174,12 @@ Widget customAppBar(
           },
           child: isTrue
               ? const Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Icon(
-              Icons.arrow_back_ios_new_outlined,
-              color: Color(0xFF0F368C),
-            ),
-          )
+                  padding: EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    color: Color(0xFF0F368C),
+                  ),
+                )
               : const SizedBox()),
       title: Text(
         '${text}',
@@ -186,31 +187,34 @@ Widget customAppBar(
       ),
       actions: isActionIcon == true
           ? [
-        const Icon(CupertinoIcons.heart, color: Color(0xFF0F368C),),
-        const SizedBox(
-          width: 10,
-        ),
-        const Icon(
-          Icons.shopping_cart_outlined,
-          color: Color(0xFF0F368C),
-        ),
-        const SizedBox(
-          width: 10,
-        )
-        // InkWell(
-        //   onTap: (){
-        //     Navigator.pop(context);
-        //   },
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(8),
-        //     child: InkWell(
-        //         onTap: (){
-        //          // Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationScreen()));
-        //         },
-        //         child: Icon(Icons.search,color: colors.whiteTemp,)),
-        //   ),
-        // ),
-      ]
+              const Icon(
+                CupertinoIcons.heart,
+                color: Color(0xFF0F368C),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Icon(
+                Icons.shopping_cart_outlined,
+                color: Color(0xFF0F368C),
+              ),
+              const SizedBox(
+                width: 10,
+              )
+              // InkWell(
+              //   onTap: (){
+              //     Navigator.pop(context);
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8),
+              //     child: InkWell(
+              //         onTap: (){
+              //          // Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationScreen()));
+              //         },
+              //         child: Icon(Icons.search,color: colors.whiteTemp,)),
+              //   ),
+              // ),
+            ]
           : [],
     ),
   );
@@ -242,7 +246,7 @@ Widget homeAppBar(BuildContext context,
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: const Icon(
                 Icons.menu,
-                color:Color(0xFF0F368C),
+                color: Color(0xFF0F368C),
               ),
             ),
           ),
@@ -285,7 +289,7 @@ Widget commonAppBar(BuildContext context,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       //padding: EdgeInsets.only(top: 10),
       decoration: const BoxDecoration(
-        color:  CustomColors.primaryColor,
+          color: CustomColors.primaryColor,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(15),
               bottomRight: Radius.circular(15))),
@@ -294,7 +298,7 @@ Widget commonAppBar(BuildContext context,
         children: [
           InkWell(
             onTap: () {
-                Navigator.pop(context);
+              Navigator.pop(context);
             },
             child: Container(
               // margin: EdgeInsets.all(10),
@@ -318,21 +322,30 @@ Widget commonAppBar(BuildContext context,
           ),
           isActionButton == false
               ? Container(
-            width: 40,
-          )
-              : Container(
-            // margin: EdgeInsets.all(10),
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10)),
-            child: const Icon(
-              Icons.headset_rounded,
-              color: CustomColors.primaryColor,
-            ),
-          ),
+                  width: 40,
+                )
+              : InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SupportNewScreen()));
+                  },
+                  child: Container(
+                    // margin: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: const Icon(
+                      Icons.headset_rounded,
+                      color: CustomColors.primaryColor,
+                    ),
+                  ),
+                ),
         ],
-      ));
+      ),
+  );
 }
 
 // class CustomAppbar extends StatefulWidget {

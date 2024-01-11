@@ -1505,8 +1505,7 @@ class _MyAccountState extends State<MyAccount> {
       var result = await response.stream.bytesToString();
       var finalResult = jsonDecode(result);
       Fluttertoast.showToast(msg: "${finalResult['message']}");
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
     } else {
       print(response.reasonPhrase);
     }

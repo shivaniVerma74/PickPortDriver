@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jdx/AuthViews/LoginScreen.dart';
 import 'package:jdx/AuthViews/SignUpScreen.dart';
 import 'package:jdx/Utils/CustomColor.dart';
@@ -12,6 +14,7 @@ import 'package:http/http.dart'as http;
 
 import '../Utils/ApiPath.dart';
 import '../Utils/Color.dart';
+import '../Views/GetHelp.dart';
 
 class AddBankDetails extends StatefulWidget {
    AddBankDetails({Key? key,this.name,this.mobile,this.email,this.address,this.adhar,this.long,this.lat,this.cPass,this.Licence,this.pan,this.pass,this.rc,this.refer,this.vcNo,this.image,this.cID,this.sId,this.Insurance,this.pollution,this.vType}) : super(key: key);
@@ -28,6 +31,200 @@ class _AddBankDetailsState extends State<AddBankDetails> {
   TextEditingController ifscCode = TextEditingController();
   int selected = 0;
   final _formKey = GlobalKey<FormState>();
+
+  Future<bool> showExitPopupl(int valuef, valueb) async {
+    return await showDialog(
+      //show confirm dialogue
+      //the return value will be from "Yes" or "No" options
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Center(
+            child: Text('Upload Check Book ',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0F368C)))),
+        content: Row(
+          // crossAxisAlignment: CrossAxisAlignment.s,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  camGallPopup(valuef);
+                },
+                child: Container(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: colors.primary),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: const Text('Check Book Front',
+                        style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff757575)))),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  camGallPopup(valueb);
+                },
+                child: Container(
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: colors.primary),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    children: const [
+                      Text('Driving License Back',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff757575),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ) ??
+        false; //if showDialouge had returned null, then return false
+  }
+
+
+  Future<bool> camGallPopup(int value) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Center(
+          child: Text(
+            'Pic Image',
+            style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF0F368C)),
+          ),
+        ),
+        content: Container(
+          height: 150,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  _getFromGallery(value);
+                },
+                child: Container(
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: colors.primary),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                      child: Text('From Gallery',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF0F368C)))),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Center(
+                child: Text(
+                  'OR',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF0F368C)),
+                ),
+              ),
+              const SizedBox(height: 20),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  _getCamera(value);
+                },
+                child: Container(
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: colors.primary),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                    child: Text('From Camera',
+                        style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF0F368C))),
+                  ),
+                ),
+              ),
+              // const SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ),
+    ) ??
+        false;
+  }
+
+  final ImagePicker _picker = ImagePicker();
+
+  _getFromGallery(int vall) async {
+    PickedFile? pickedFile = await _picker.getImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      if (vall == 1) {
+        setState(() {
+          chechBookFile = File(pickedFile.path);
+        });
+      }
+      else if (vall == 2) {
+        setState(() {
+          chechBookBackFile = File(pickedFile.path);
+        });
+      }
+    }
+  }
+
+  File? chechBookFile;
+  File? chechBookBackFile;
+
+  _getCamera(int vall) async {
+    PickedFile? pickedFile = await _picker.getImage(
+      source: ImageSource.camera,
+    );
+    if (pickedFile != null) {
+      if (vall == 1) {
+        setState(() {
+          chechBookFile = File(pickedFile.path);
+        });
+      }
+      else if (vall == 2) {
+        setState(() {
+          chechBookBackFile = File(pickedFile.path);
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print('____Som______${widget.image}_________');
@@ -57,26 +254,31 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: const Text(
-                          'Get Help ?',
-                          style: TextStyle(color: colors.primary, fontSize: 12),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => GetHelp() ));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: const Text(
+                            'Get Help ?',
+                            style: TextStyle(color: colors.primary, fontSize: 12),
+                          ),
                         ),
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  )
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // const Text(
+                  //   'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
+                  //   style: TextStyle(fontSize: 12, color: Colors.white),
+                  // )
                 ],
               ),
             ),
@@ -187,7 +389,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             prefixIcon: Padding(
-                              padding: EdgeInsets.only(top: 12),
+                              padding: const EdgeInsets.only(top: 12),
                               child: Image.asset(
                                 'assets/images/ACCOUNT  NUMBER.png',
                                 scale: 1.3,
@@ -322,8 +524,100 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                         )
                       ],
                     ),
+                    SizedBox(height: 10,),
+                    Card(
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white),
+                        child: TextFormField(
+                          readOnly: true,
+                          maxLength: 10,
+                          onTap: () {
+                            showExitPopupl(1, 2);
+                          },
+                          //  controller: addressController,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            counterText: "",
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Image.asset(
+                                'assets/images/DRIVING LICENSE.png',
+                                scale: 1.3,
+                                color: colors.secondary,
+                              ),
+                            ),
+                            contentPadding: EdgeInsets.only(top: 22, left: 5),
+                            border: InputBorder.none,
+                            hintText: "Check Book Image",
+                          ),
+                          // validator: (v) {
+                          //   if (v!.isEmpty) {
+                          //     return "Driving License is required";
+                          //   }
+                          // },
+                        ),
+                      ),
+                    ),
+                    chechBookFile != null
+                        ? Row(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Expanded(
+                          child: Card(
+                            elevation: 1,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Container(
+                              height: 115,
+                              decoration: BoxDecoration(
+                                  color: CustomColors.TransparentColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      image: FileImage(
+                                          File(chechBookFile!.path)),
+                                      fit: BoxFit.fill)),
+                            ),
+                          ),
+                        ),
+                        chechBookBackFile != null
+                            ? Expanded(
+                          child: Card(
+                            elevation: 1,
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(10)),
+                            child: Container(
+                              height: 115,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color:
+                                  CustomColors.TransparentColor,
+                                  borderRadius:
+                                  BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      image: FileImage(File(chechBookBackFile!.path)),
+                                      fit: BoxFit.fill)),
+                            ),
+                          ),
+                        )
+                            : SizedBox.shrink(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    )
+                        : SizedBox.shrink(),
                     const SizedBox(
-                      height: 40,
+                      height: 10,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 70.0),

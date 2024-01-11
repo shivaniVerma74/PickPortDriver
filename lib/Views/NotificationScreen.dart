@@ -202,10 +202,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: double.maxFinite,
-                  child: isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : notificationList.isEmpty
-                      ? Center(child: const Text('Data Not Available'))
+                  child: notificationList.isEmpty
+                      ? Center(child: const Text('Notification Not Found'))
                       : ListView.builder(
                       scrollDirection: Axis.vertical,
                       physics: const NeverScrollableScrollPhysics(),
@@ -390,12 +388,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body[RequestKeys.userId] = userId ?? '';
       var res = await api.getNotificationData(body);
       if (res.status ?? false) {
-        print('_____success____');
         // responseData = res.data?.userid.toString();
         notificationList = res.data ?? [];
+        print('_____success____$notificationList' );
+
         setState(() {});
       } else {
-        Fluttertoast.showToast(msg: '');
+        // Fluttertoast.showToast(msg: '');
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Something went wrong");

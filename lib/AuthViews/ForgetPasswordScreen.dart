@@ -10,6 +10,7 @@ import 'package:jdx/AuthViews/verificationOtp.dart';
 import 'package:jdx/Utils/CustomColor.dart';
 import 'package:http/http.dart' as http;
 import '../Utils/Color.dart';
+import '../Views/GetHelp.dart';
 
 class Forget extends StatefulWidget {
   const Forget({Key? key}) : super(key: key);
@@ -102,14 +103,14 @@ class _ForgetState extends State<Forget> {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.arrow_back_ios_new_outlined,
                                 color: Colors.white,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text(
+                          const Text(
                             'Forgot Password',
                             style: TextStyle(
                                 fontSize: 24,
@@ -118,23 +119,29 @@ class _ForgetState extends State<Forget> {
                           ),
                         ],
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Text(
-                          'Need Help ?',
-                          style: TextStyle(
-                              color: colors.primary,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const GetHelp()),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                          padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: const Text(
+                            'Need Help ?',
+                            style: TextStyle(
+                                color: colors.primary,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -154,7 +161,7 @@ class _ForgetState extends State<Forget> {
               height: MediaQuery.of(context).size.height * 0.85,
               decoration: BoxDecoration(
                 color: Colors.blue.shade50,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30)),
               ),
@@ -162,12 +169,12 @@ class _ForgetState extends State<Forget> {
                 key: _formKey,
                 child: ListView(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(
+                      child: const Text(
                         "Enter Mobile Number Associated With Your Account",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -191,10 +198,10 @@ class _ForgetState extends State<Forget> {
                           maxLength: 10,
                           controller: mobileNumber,
                           keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             counterText: "",
                             prefixIcon: Padding(
-                              padding: const EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.only(top: 10),
                               child: Icon(
                                 Icons.call,
                                 color: CustomColors.accentColor,
@@ -215,7 +222,7 @@ class _ForgetState extends State<Forget> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Padding(
@@ -234,7 +241,7 @@ class _ForgetState extends State<Forget> {
                             height: 45,
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: isLoading
-                                ? CircularProgressIndicator()
+                                ? const CircularProgressIndicator()
                                 : Center(
                               child: Text(
                                 'Submit',

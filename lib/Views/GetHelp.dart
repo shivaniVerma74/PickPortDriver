@@ -16,7 +16,6 @@ class GetHelp extends StatefulWidget {
 }
 
 class _GetHelpState extends State<GetHelp> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -32,22 +31,22 @@ class _GetHelpState extends State<GetHelp> {
     var headers = {
       'Cookie': 'ci_session=521e7894daca5e3189ecd3dd2cd31fd3c14d22c9'
     };
-    var request = http.MultipartRequest('POST', Uri.parse('https://developmentalphawizz.com/pickport/api/Authentication/get_driver_help'));
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'https://developmentalphawizz.com/pickport/api/Authentication/get_driver_help'));
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var finalResponse = await response.stream.bytesToString();
-      var result=jsonDecode(finalResponse);
-      if(result['status']==true){
-
+      var result = jsonDecode(finalResponse);
+      if (result['status'] == true) {
         setState(() {
           privacyData = result['data']['description'].toString();
         });
       }
-
-
     } else {
       print(response.reasonPhrase);
     }
@@ -64,36 +63,37 @@ class _GetHelpState extends State<GetHelp> {
                 child: commonAppBar(context, text: "Get Help")),
             body: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                decoration: const BoxDecoration(
-
-                ),
+                decoration: const BoxDecoration(),
                 child: privacyData == null || privacyData == ""
                     ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+                        child: CircularProgressIndicator(),
+                      )
                     : Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 10),
-                  decoration: const BoxDecoration(
-                      borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(0)),
-                      color: Colors.white),
-                  width: size.width,
-                  height: size.height,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Html(data: "${privacyData}"),
-                        Text(
-                          '${privacyData}',
-                          style: const TextStyle(
-                            fontSize: 16,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.only(topRight: Radius.circular(0)),
+                            color: Colors.white),
+                        width: size.width,
+                        height: size.height,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Html(data: "${privacyData}"),
+                              Text(
+                                '$privacyData',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ))));
+                      ),
+            ),
+        ),
+    );
   }
 }

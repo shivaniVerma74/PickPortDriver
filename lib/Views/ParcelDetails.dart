@@ -190,7 +190,7 @@ class _PercelDetailsState extends State<PercelDetails> {
                                                   onTap: () {
                                                     _launchPhoneDialer("${singleBookingModel?.data?.first.receiverPhone}");
                                                   },
-                                                  child: Text("${singleBookingModel?.data?.first.senderName}")),
+                                                  child: Text("${singleBookingModel?.data?.first.receiverPhone}")),
                                             ],
                                           ),
                                         ],
@@ -207,7 +207,9 @@ class _PercelDetailsState extends State<PercelDetails> {
                                   Row(
                                     children: [
                                       Icon(Icons.location_on, size: 20,),
-                                      Text("${singleBookingModel?.data?.first.senderFulladdress}"),
+                                      Container(
+                                        width: 240,
+                                          child: Text("${singleBookingModel?.data?.first.senderFulladdress}", maxLines: 2,)),
                                     ],
                                   ),
                                 ],
@@ -282,7 +284,9 @@ class _PercelDetailsState extends State<PercelDetails> {
                                   Row(
                                     children: [
                                       const Icon(Icons.location_on, size: 20,),
-                                      Text("${singleBookingModel?.data?.first.reciverFullAddress}"),
+                                      Container(
+                                        width: 240,
+                                          child: Text("${singleBookingModel?.data?.first.reciverFullAddress}", maxLines: 2,)),
                                     ],
                                   ),
                                 ],

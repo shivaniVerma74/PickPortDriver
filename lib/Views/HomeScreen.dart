@@ -92,8 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
       var finalResult = GetProfileModel.fromJson(jsonDecode(result));
       setState(() {
         getProfileModel = finalResult;
-        print(
-            '____Som______${getProfileModel?.data?[0].userFullname}_________');
+        print('____Som______${getProfileModel?.data?[0].userFullname}_________');
         Fluttertoast.showToast(msg: qrCodeResult);
       });
     } else {
@@ -1073,13 +1072,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     isOnline = false;
                   });
                 },
-                child: Container(
-                  child: Center(
-                    child: Text(
-                      'Offline',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: isOnline ? Colors.white : Colors.red),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 35),
+                  child: Container(
+                    child: Center(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.check_circle_rounded,
+                            color: isOnline ? Colors.red : Colors.white,
+                          ),
+                          Text(
+                            'Offline',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: isOnline ? Colors.white : Colors.red),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

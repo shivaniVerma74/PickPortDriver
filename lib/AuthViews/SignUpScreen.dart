@@ -730,6 +730,62 @@ class _SignUpScreen extends State<SignUpScreen> {
     location = await getUserCurrentPosition();
   }
 
+  final picker = ImagePicker();
+
+  var imageCode;
+  Future getImageGallery() async {
+    final pickedFile =
+    await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    setState(() {
+      if (pickedFile != null && imageCode == 1) {
+        imageFile = File(pickedFile.path);
+      }
+      else {
+        print('no image picked');
+      }
+    });
+  }
+
+  Future _getImageFromCamera() async {
+    final pickedFile =
+    await picker.pickImage(source: ImageSource.camera, imageQuality: 80);
+    setState(() {
+      if (pickedFile != null && imageCode == 1) {
+        imageFile = File(pickedFile.path);
+      }
+      else {
+        print('no image picked');
+      }
+    });
+  }
+
+  Future<void> _showPickerOptions() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.photo_library),
+              title: Text('Gallery'),
+              onTap: () {
+                getImageGallery();
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.camera_alt),
+              title: Text('Camera'),
+              onTap: () {
+                _getImageFromCamera();
+                // _getImage(ImageSource.camera);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -977,7 +1033,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                           readOnly: true,
                           maxLength: 10,
                           onTap: () {
-                            _getFromGallery(7);
+                            _showPickerOptions();
                           },
                           // controller: addressController,
                           keyboardType: TextInputType.phone,
@@ -1020,8 +1076,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                       color: CustomColors.TransparentColor,
                                       borderRadius: BorderRadius.circular(10),
                                       image: DecorationImage(
-                                          image:
-                                              FileImage(File(imageFile!.path)),
+                                          image: FileImage(File(imageFile!.path)),
                                           fit: BoxFit.fill)),
                                 ),
                               ),
@@ -1621,8 +1676,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                                         ),
                                       ),
                                     )
-                                  : SizedBox.shrink(),
-                              SizedBox(
+                                  : const SizedBox.shrink(),
+                              const SizedBox(
                                 height: 10,
                               ),
                             ],

@@ -1453,7 +1453,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                           //   //Navigator.push(context, MaterialPageRoute(builder: (context)=>TermsAndConditionScreen()));
                           // },
                           child: Text(
-                            "Terms and Conditions",
+                            "T&C",
                             // getTranslated(context, "Terms and Conditions"),
                             style: TextStyle(
                               fontSize: 12,
